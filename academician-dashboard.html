@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academician Dashboard | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth(["academician"]);
+    </script>
+</head>
+
+<body>
+
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="logo-area">
+            <h2>SkillBridge</h2>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="academician-dashboard.html" class="active">
+                🏠 Dashboard
+            </a>
+
+            <a href="#">
+                🔬 Research & Projects
+            </a>
+
+            <a href="#">
+                🤝 Collaboration
+            </a>
+
+            <a href="javascript:void(0)" onclick="logout()">
+                🚪 Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main-content">
+
+        <!-- HEADER -->
+
+        <header class="dashboard-topbar">
+
+            <div>
+                <h1>Academician Dashboard</h1>
+                <p>Connect research, education and industry.</p>
+            </div>
+
+            <div class="notification">
+                🔔
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="dashboard-hero">
+
+            <div>
+
+                <span class="hero-badge">
+                    ACADEMICIAN PORTAL
+                </span>
+
+                <h1>
+                    Welcome, <span id="academicianName">Academician</span> 👋
+                </h1>
+
+                <p>
+                    Manage research projects, industry collaborations and student engagement.
+                </p>
+
+            </div>
+
+            <a href="#" class="primary-btn">
+                View Research
+            </a>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">🔬</div>
+                <div>
+                    <p>Total Projects</p>
+                    <h2>4</h2>
+                    <span>Your research projects</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🚀</div>
+                <div>
+                    <p>Active Research</p>
+                    <h2>2</h2>
+                    <span>Currently active</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🤝</div>
+                <div>
+                    <p>Collaborations</p>
+                    <h2>5</h2>
+                    <span>Industry partners</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (currentUser) {
+        document.getElementById("academicianName").textContent = currentUser.full_name || currentUser.name || "Academician";
+    }
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

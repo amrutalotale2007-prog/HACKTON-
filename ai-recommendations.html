@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Recommendations | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link active">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <!-- AI HERO BANNER -->
+        <section class="ai-hero">
+            <div>
+                <span class="hero-badge">POWERED BY SKILLBRIDGE AI</span>
+                <h1>Personalized Career Engine ✦</h1>
+                <p>
+                    Hello, <strong id="studentHeroName">Student</strong>! We analyzed your skill profile and test scores. Here are high-demand courses, certifications, and project tracks customized for your career path.
+                </p>
+            </div>
+            <div style="font-size: 70px; opacity: 0.9;">
+                🤖
+            </div>
+        </section>
+
+        <!-- RECOMMENDED TRACKS -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Recommended Learning Tracks</h2>
+                    <p>Skill gap closing courses tailored to you</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <div class="quick-action">
+                    <div class="quick-icon" style="background:#0284c7;">⚡</div>
+                    <div>
+                        <h3>Advanced TypeScript & React 19</h3>
+                        <p>Learn server components, state machines, and performant web architecture.</p>
+                        <span style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#0284c7;">Estimated: 4 Weeks • 95% Match</span>
+                    </div>
+                </div>
+
+                <div class="quick-action">
+                    <div class="quick-icon" style="background:#16a34a;">🗄️</div>
+                    <div>
+                        <h3>Relational SQL & Database Tuning</h3>
+                        <p>Index optimization, query execution plans, and ACID transaction guarantees.</p>
+                        <span style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#16a34a;">Estimated: 3 Weeks • 92% Match</span>
+                    </div>
+                </div>
+
+                <div class="quick-action">
+                    <div class="quick-icon" style="background:#9333ea;">🧠</div>
+                    <div>
+                        <h3>Applied Machine Learning with Scikit</h3>
+                        <p>Supervised learning models, classification pipelines, and feature engineering.</p>
+                        <span style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#9333ea;">Estimated: 6 Weeks • 88% Match</span>
+                    </div>
+                </div>
+
+                <div class="quick-action">
+                    <div class="quick-icon" style="background:#ea580c;">🐳</div>
+                    <div>
+                        <h3>Docker & Modern CI/CD Pipelines</h3>
+                        <p>Containerization, GitHub Actions automation, and zero-downtime deployment.</p>
+                        <span style="display:inline-block;margin-top:8px;font-size:12px;font-weight:700;color:#ea580c;">Estimated: 2 Weeks • 85% Match</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARGET ROLES -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Top Matched Roles for You</h2>
+                    <p>Based on your profile competencies</p>
+                </div>
+                <a href="opportunities.html" class="btn-purple">View Opportunities →</a>
+            </div>
+
+            <div class="op-card">
+                <div>
+                    <span class="badge" style="background:#dcfce7;color:#166534;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;">94% Match</span>
+                    <h3 style="margin-top:4px;">Full Stack Web Developer</h3>
+                    <p>Matching skills: JavaScript, HTML/CSS, MySQL, Git, REST APIs</p>
+                </div>
+                <a href="opportunities.html" class="secondary-btn">Explore 12 Openings</a>
+            </div>
+
+            <div class="op-card">
+                <div>
+                    <span class="badge" style="background:#dbeafe;color:#1e40af;font-weight:700;padding:4px 8px;border-radius:6px;font-size:12px;">88% Match</span>
+                    <h3 style="margin-top:4px;">Junior Backend Engineer</h3>
+                    <p>Matching skills: SQL, Node.js, Database Design, System Logic</p>
+                </div>
+                <a href="opportunities.html" class="secondary-btn">Explore 8 Openings</a>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (currentUser) {
+        document.getElementById("studentHeroName").textContent = currentUser.full_name || currentUser.name || "Student";
+    }
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

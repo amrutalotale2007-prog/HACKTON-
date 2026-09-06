@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link active">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Welcome back, <span id="greetingName">Student</span> 👋</h1>
+                <p>Here's where you left off.</p>
+            </div>
+        </div>
+
+
+        <!-- STATS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon">✓</div>
+                <div>
+                    <p>Latest Assessment</p>
+                    <h2 id="dashScore">80%</h2>
+                    <span id="dashScoreSub">Score 4/5</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">◎</div>
+                <div>
+                    <p>Skills Added</p>
+                    <h2 id="dashSkillsCount">6</h2>
+                    <span>In your skill profile</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">▥</div>
+                <div>
+                    <p>Applications</p>
+                    <h2 id="dashAppsCount">2</h2>
+                    <span id="dashAppsSub">Total submitted</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">◈</div>
+                <div>
+                    <p>Shortlisted</p>
+                    <h2 id="dashShortlistedCount">1</h2>
+                    <span>Awaiting next steps</span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Quick Actions</h2>
+                    <p>Pick up where your career development leaves off.</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+
+                <a href="skill-assessment.html" class="quick-action">
+                    <div class="quick-icon">✓</div>
+                    <div>
+                        <h3>Take Your Skill Assessment</h3>
+                        <p>Evaluate your engineering capabilities and unlock job matching.</p>
+                    </div>
+                </a>
+
+                <a href="skill-gap.html" class="quick-action">
+                    <div class="quick-icon">◈</div>
+                    <div>
+                        <h3>Review Your Skill Gap</h3>
+                        <p>Analyze how your skillset measures up to target tech roles.</p>
+                    </div>
+                </a>
+
+                <a href="ai-recommendations.html" class="quick-action">
+                    <div class="quick-icon">✦</div>
+                    <div>
+                        <h3>AI Recommendations</h3>
+                        <p>Courses, learning tracks and curated internships.</p>
+                    </div>
+                </a>
+
+                <a href="opportunities.html" class="quick-action">
+                    <div class="quick-icon">▤</div>
+                    <div>
+                        <h3>Browse Opportunities</h3>
+                        <p>Verified internships and roles from partner companies.</p>
+                    </div>
+                </a>
+
+                <a href="portfolio.html" class="quick-action">
+                    <div class="quick-icon">◆</div>
+                    <div>
+                        <h3>Build Your Portfolio</h3>
+                        <p>Showcase projects and certifications to recruiters.</p>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- RECENT OPPORTUNITIES -->
+
+        <section class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Latest Opportunities</h2>
+                    <p>Newly posted by industry partners.</p>
+                </div>
+                <a href="opportunities.html" class="secondary-btn">View All</a>
+            </div>
+
+            <div class="op-card">
+                <div>
+                    <h3>Full Stack Web Developer Intern</h3>
+                    <p>TechNova Solutions • Remote • Deadline 2026-10-20</p>
+                </div>
+                <a href="opportunities.html" class="secondary-btn">View</a>
+            </div>
+
+            <div class="op-card">
+                <div>
+                    <h3>Junior AI & Data Science Engineer</h3>
+                    <p>Cognitive Labs • Hybrid • Deadline 2026-11-05</p>
+                </div>
+                <a href="opportunities.html" class="secondary-btn">View</a>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (currentUser) {
+        document.getElementById("greetingName").textContent = currentUser.full_name || currentUser.name || "Student";
+    }
+
+    // Dynamic assessment score from localStorage
+    const savedAssessment = localStorage.getItem("skillbridge_assessment");
+    if (savedAssessment) {
+        try {
+            const data = JSON.parse(savedAssessment);
+            document.getElementById("dashScore").textContent = data.percent + "%";
+            document.getElementById("dashScoreSub").textContent = `Score ${data.score}/${data.total}`;
+        } catch(e){}
+    }
+
+    // Dynamic applications from localStorage
+    const savedApps = localStorage.getItem("skillbridge_applications");
+    if (savedApps) {
+        try {
+            const apps = JSON.parse(savedApps);
+            document.getElementById("dashAppsCount").textContent = apps.length;
+            const shortlisted = apps.filter(a => a.status === "Shortlisted").length;
+            document.getElementById("dashShortlistedCount").textContent = shortlisted;
+        } catch(e){}
+    }
+
+    // Dynamic skills count from localStorage
+    const savedProfile = localStorage.getItem("skillbridge_profile");
+    if (savedProfile) {
+        try {
+            const prof = JSON.parse(savedProfile);
+            if (prof.skills && Array.isArray(prof.skills)) {
+                document.getElementById("dashSkillsCount").textContent = prof.skills.length;
+            }
+        } catch(e){}
+    }
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

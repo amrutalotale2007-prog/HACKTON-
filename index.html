@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge — Connecting Talent with Industry & Academia</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .hero-stats-bar {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 24px 30px;
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+        }
+        .feature-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            transition: var(--transition);
+            height: 100%;
+        }
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        .step-num {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .cta-banner {
+            background: linear-gradient(135deg, #635bff 0%, #7c3aed 100%);
+            border-radius: var(--radius-lg);
+            color: #ffffff;
+            padding: 50px 40px;
+            box-shadow: var(--shadow-lg);
+        }
+    </style>
+
+    <script src="auth.js"></script>
+</head>
+
+<body>
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold fs-4" href="index.html">
+            Skill<span style="color:#635bff;">Bridge</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navContent">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="#how-it-works">How It Works</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="#roles">Ecosystem</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="opportunities.html">Opportunities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-medium" href="skill-assessment.html">Skill Assessment</a>
+                </li>
+            </ul>
+
+            <!-- DYNAMIC AUTH STATE -->
+            <div id="authActions" class="d-flex align-items-center gap-2">
+                <a href="login.html" class="btn btn-outline-secondary">
+                    Login
+                </a>
+                <a href="signin.html" class="btn btn-purple">
+                    Create Account
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+
+<header class="py-5 border-bottom" style="background: radial-gradient(circle at 50% 10%, #faf9ff 0%, #f4f2ff 100%);">
+
+    <div class="container text-center py-4">
+
+        <span class="badge rounded-pill mb-3" style="background:#ece9fe;color:#635bff;padding:8px 18px;font-size:13px;font-weight:700;">
+            🚀 EMPOWERING STUDENTS • ACADEMIA • INDUSTRY
+        </span>
+
+        <h1 class="display-4 fw-bold mb-3" style="color: var(--dark); letter-spacing: -1px;">
+            Connecting Talent with
+            <span style="color:#635bff;">Opportunities</span>
+        </h1>
+
+        <p class="lead text-muted mx-auto mb-4" style="max-width: 680px; font-size: 18px; line-height: 1.6;">
+            Assess your engineering skills, eliminate competency gaps with AI-curated roadmaps, and match directly with verified tech internships, full-time roles, and faculty research collaborations.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+            <a href="signin.html" class="btn btn-lg btn-purple px-4 py-3">
+                Start Your Journey Free
+                <i class="bi bi-arrow-right"></i>
+            </a>
+
+            <a href="skill-assessment.html" class="btn btn-lg btn-outline-secondary px-4 py-3" style="background:#ffffff;">
+                Take Free Skill Assessment ✓
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     FLOATING STATS BAR
+========================= -->
+
+<div class="container">
+
+    <div class="hero-stats-bar">
+
+        <div class="row text-center g-4">
+
+            <div class="col-6 col-md-3">
+                <h3 class="fw-bold mb-1" style="color: var(--primary); font-size: 32px;">10,000+</h3>
+                <p class="text-muted mb-0 small fw-semibold">Verified Students</p>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <h3 class="fw-bold mb-1" style="color: var(--primary); font-size: 32px;">250+</h3>
+                <p class="text-muted mb-0 small fw-semibold">Industry Partners</p>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <h3 class="fw-bold mb-1" style="color: var(--primary); font-size: 32px;">94%</h3>
+                <p class="text-muted mb-0 small fw-semibold">Role Match Accuracy</p>
+            </div>
+
+            <div class="col-6 col-md-3">
+                <h3 class="fw-bold mb-1" style="color: var(--primary); font-size: 32px;">500+</h3>
+                <p class="text-muted mb-0 small fw-semibold">Research Collaborations</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     HOW IT WORKS
+========================= -->
+
+<section id="how-it-works" class="py-5 my-4">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <span style="color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase;">A Seamless Blueprint</span>
+            <h2 class="fw-bold mt-1" style="font-size: 32px; color: var(--dark);">How SkillBridge Works</h2>
+            <p class="text-muted mx-auto" style="max-width: 550px;">From foundational evaluation to your dream tech offer in three structured phases.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="step-num">1</div>
+                    <h3 class="h5 fw-bold mb-2">Assess & Benchmark</h3>
+                    <p class="text-muted small">
+                        Take targeted assessments across Web Development, SQL, APIs, and Data Structures to identify your strengths and blind spots.
+                    </p>
+                    <a href="skill-assessment.html" class="fw-bold small" style="color: var(--primary);">Take Test Now →</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="step-num">2</div>
+                    <h3 class="h5 fw-bold mb-2">Bridge the Gaps with AI</h3>
+                    <p class="text-muted small">
+                        Our AI engine scans live industry job requisitions and builds you a personalized study roadmap with recommended courses.
+                    </p>
+                    <a href="skill-gap.html" class="fw-bold small" style="color: var(--primary);">Explore Gap Matrix →</a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="feature-card text-center">
+                    <div class="step-num">3</div>
+                    <h3 class="h5 fw-bold mb-2">Apply & Build Portfolio</h3>
+                    <p class="text-muted small">
+                        Apply to verified internships with one click, track status in real-time, and showcase verified projects to recruiters.
+                    </p>
+                    <a href="opportunities.html" class="fw-bold small" style="color: var(--primary);">Browse Jobs →</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ECOSYSTEM / ROLES
+========================= -->
+
+<section id="roles" class="py-5 bg-white border-top border-bottom">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <span style="color: var(--primary); font-weight: 700; font-size: 13px; text-transform: uppercase;">Designed for Everyone</span>
+            <h2 class="fw-bold mt-1" style="font-size: 32px; color: var(--dark);">Tailored Portals for Every Stakeholder</h2>
+        </div>
+
+        <div class="row g-4">
+
+            <!-- STUDENTS -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div style="font-size: 38px; color: var(--primary); margin-bottom: 16px;">
+                        <i class="bi bi-mortarboard-fill"></i>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">For Students</h3>
+                    <p class="text-muted small mb-3">
+                        Diagnose skill proficiencies, build a professional digital portfolio, and land high-paying internships matched to your skills.
+                    </p>
+                    <ul class="list-unstyled small text-muted mb-4" style="line-height: 1.8;">
+                        <li>✓ Automated Skill Assessment</li>
+                        <li>✓ Real-Time Application Tracking</li>
+                        <li>✓ AI Learning Recommendations</li>
+                    </ul>
+                    <a href="dashboard.html" class="btn btn-outline-secondary w-100 fw-semibold">Open Student Hub</a>
+                </div>
+            </div>
+
+            <!-- INDUSTRY -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div style="font-size: 38px; color: var(--primary); margin-bottom: 16px;">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">For Industry</h3>
+                    <p class="text-muted small mb-3">
+                        Eliminate hiring friction. Post opportunities and automatically match with candidates whose verified skills fit your stack.
+                    </p>
+                    <ul class="list-unstyled small text-muted mb-4" style="line-height: 1.8;">
+                        <li>✓ Verified Candidate Matching</li>
+                        <li>✓ Opportunity Posting & Pipeline</li>
+                        <li>✓ Academic Mentorship Programs</li>
+                    </ul>
+                    <a href="industry-dashboard.html" class="btn btn-outline-secondary w-100 fw-semibold">Open Industry Portal</a>
+                </div>
+            </div>
+
+            <!-- ACADEMICIANS -->
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div style="font-size: 38px; color: var(--primary); margin-bottom: 16px;">
+                        <i class="bi bi-journal-code"></i>
+                    </div>
+                    <h3 class="h5 fw-bold mb-2">For Academicians</h3>
+                    <p class="text-muted small mb-3">
+                        Connect research with practical industry initiatives. Launch collaborative student projects, workshops, and consultancy tracks.
+                    </p>
+                    <ul class="list-unstyled small text-muted mb-4" style="line-height: 1.8;">
+                        <li>✓ Research Project Management</li>
+                        <li>✓ Industry Collaboration Hub</li>
+                        <li>✓ Student Faculty Mentoring</li>
+                    </ul>
+                    <a href="academician-dashboard.html" class="btn btn-outline-secondary w-100 fw-semibold">Open Faculty Portal</a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     CALL TO ACTION BANNER
+========================= -->
+
+<section class="container py-5">
+
+    <div class="cta-banner text-center">
+
+        <h2 class="display-6 fw-bold mb-3">Start Building Your Tech Career Today</h2>
+
+        <p class="lead mb-4 mx-auto" style="max-width: 600px; opacity: 0.95;">
+            Join thousands of students and leading tech employers already leveraging SkillBridge for verified skill development and career placement.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+            <a href="signin.html" class="btn btn-lg" style="background:#ffffff;color:var(--primary);font-weight:700;padding:12px 28px;">
+                Create Free Account
+            </a>
+
+            <a href="opportunities.html" class="btn btn-lg btn-outline-light" style="font-weight:600;padding:12px 28px;">
+                Browse Opportunities
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="bg-white border-top py-5">
+
+    <div class="container">
+
+        <div class="row g-4 mb-4">
+
+            <div class="col-md-4">
+                <h4 class="fw-bold mb-2">Skill<span style="color:#635bff;">Bridge</span></h4>
+                <p class="text-muted small">
+                    Bridging academia, student talent, and modern industry requirements through verified skill benchmarks and smart opportunity matching.
+                </p>
+            </div>
+
+            <div class="col-md-2">
+                <h6 class="fw-bold mb-3">Platform</h6>
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-2"><a href="skill-assessment.html">Skill Assessment</a></li>
+                    <li class="mb-2"><a href="skill-gap.html">Gap Analysis</a></li>
+                    <li class="mb-2"><a href="ai-recommendations.html">AI Recommendations</a></li>
+                    <li class="mb-2"><a href="portfolio.html">Digital Portfolio</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-2">
+                <h6 class="fw-bold mb-3">Portals</h6>
+                <ul class="list-unstyled small text-muted">
+                    <li class="mb-2"><a href="dashboard.html">Student Portal</a></li>
+                    <li class="mb-2"><a href="industry-dashboard.html">Industry Hub</a></li>
+                    <li class="mb-2"><a href="academician-dashboard.html">Academician Portal</a></li>
+                    <li class="mb-2"><a href="opportunities.html">All Opportunities</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h6 class="fw-bold mb-3">Get Started</h6>
+                <p class="text-muted small mb-3">Ready to explore? Create an account in under 60 seconds.</p>
+                <div class="d-flex gap-2">
+                    <a href="signin.html" class="btn btn-purple btn-sm">Create Account</a>
+                    <a href="login.html" class="btn btn-outline-secondary btn-sm">Login</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="border-top pt-4 text-center text-muted small">
+            &copy; 2026 SkillBridge Platform. All rights reserved.
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- DYNAMIC NAVBAR AUTH SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const user = getCurrentUser();
+    const authBox = document.getElementById("authActions");
+
+    if (user && authBox) {
+        let dashboardUrl = "dashboard.html";
+        if (user.role === "academician") dashboardUrl = "academician-dashboard.html";
+        else if (user.role === "industry") dashboardUrl = "industry-dashboard.html";
+
+        authBox.innerHTML = `
+            <span class="small fw-semibold text-muted d-none d-md-inline">
+                👋 Welcome, <strong>${user.full_name || user.name || 'User'}</strong>
+            </span>
+            <a href="${dashboardUrl}" class="btn btn-purple btn-sm">
+                Go to Dashboard →
+            </a>
+            <button onclick="logout()" class="btn btn-outline-secondary btn-sm">
+                Logout
+            </button>
+        `;
+    }
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+
+</body>
+
+</html>

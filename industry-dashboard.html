@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Dashboard | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth(["industry"]);
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Industry Portal
+        </div>
+
+        <a href="industry-dashboard.html" class="side-link active">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="#" class="side-link">
+            <span>▤</span>
+            Post Opportunity
+        </a>
+
+        <a href="#" class="side-link">
+            <span>👥</span>
+            Candidate Matching
+        </a>
+
+        <a href="#" class="side-link">
+            <span>🤝</span>
+            Academia Collaboration
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+                <h2>Industry Dashboard</h2>
+                <p>Manage opportunities, discover talent and collaborate with academia.</p>
+            </div>
+
+            <div class="user-box" style="display:flex;align-items:center;gap:12px;">
+                <div class="avatar" id="industryAvatar" style="width:40px;height:40px;border-radius:50%;background:#635bff;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold;">
+                    I
+                </div>
+                <div>
+                    <strong id="industryName">Industry Partner</strong>
+                    <br>
+                    <small style="color:#666;">Industry Partner</small>
+                </div>
+            </div>
+
+        </header>
+
+
+        <!-- STATS -->
+
+        <section class="stats-grid" style="margin-top:20px;">
+
+            <div class="stat-card">
+                <div class="stat-icon">💼</div>
+                <div>
+                    <p>Active Opportunities</p>
+                    <h2>5</h2>
+                    <span>Currently accepting applications</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📄</div>
+                <div>
+                    <p>Total Applications</p>
+                    <h2>24</h2>
+                    <span>Candidates applied</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div>
+                    <p>Shortlisted Candidates</p>
+                    <h2>8</h2>
+                    <span>Ready for interview</span>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    if (currentUser) {
+        const name = currentUser.full_name || currentUser.name || "Industry Partner";
+        document.getElementById("industryName").textContent = name;
+        document.getElementById("industryAvatar").textContent = name.charAt(0).toUpperCase();
+    }
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

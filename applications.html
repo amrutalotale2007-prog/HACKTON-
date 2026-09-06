@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Applications | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link active">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Track Your Applications 📋</h1>
+                <p>Real-time status updates on your submitted job and internship applications.</p>
+            </div>
+            <a href="opportunities.html" class="btn-purple">
+                Find More Opportunities →
+            </a>
+        </div>
+
+        <!-- STATS -->
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">▥</div>
+                <div>
+                    <p>Total Submitted</p>
+                    <h2 id="totalSubmitted">0</h2>
+                    <span>Active submissions</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⏳</div>
+                <div>
+                    <p>Under Review</p>
+                    <h2 id="totalReview">0</h2>
+                    <span>Recruiter reviewing</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">◈</div>
+                <div>
+                    <p>Shortlisted</p>
+                    <h2 id="totalShortlisted">0</h2>
+                    <span>Ready for interview</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">✓</div>
+                <div>
+                    <p>Selected</p>
+                    <h2 id="totalSelected">0</h2>
+                    <span>Offers received</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- APPLICATIONS LIST -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Submitted Applications</h2>
+                    <p>Your history of job applications</p>
+                </div>
+            </div>
+
+            <div id="applicationsList" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Rendered via JS -->
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+const DEFAULT_APPS = [
+    {
+        id: 1,
+        opportunity_id: 101,
+        title: "Full Stack Web Developer Intern",
+        company: "TechNova Solutions",
+        type: "Internship",
+        location: "Mumbai, India",
+        applied_at: "2026-09-02",
+        status: "Under Review"
+    },
+    {
+        id: 2,
+        opportunity_id: 103,
+        title: "Frontend UI/UX Engineering Intern",
+        company: "PixelCraft Digital",
+        type: "Internship",
+        location: "Bengaluru, India",
+        applied_at: "2026-08-28",
+        status: "Shortlisted"
+    }
+];
+
+function loadApplications() {
+    let apps = [];
+    const stored = localStorage.getItem("skillbridge_applications");
+    if (!stored) {
+        localStorage.setItem("skillbridge_applications", JSON.stringify(DEFAULT_APPS));
+        apps = DEFAULT_APPS;
+    } else {
+        try {
+            apps = JSON.parse(stored);
+        } catch (e) {
+            apps = DEFAULT_APPS;
+        }
+    }
+
+    // Update counts
+    document.getElementById("totalSubmitted").textContent = apps.length;
+    document.getElementById("totalReview").textContent = apps.filter(a => a.status === "Under Review" || a.status === "Applied").length;
+    document.getElementById("totalShortlisted").textContent = apps.filter(a => a.status === "Shortlisted").length;
+    document.getElementById("totalSelected").textContent = apps.filter(a => a.status === "Selected").length;
+
+    const list = document.getElementById("applicationsList");
+    list.innerHTML = "";
+
+    if (apps.length === 0) {
+        list.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3>No applications submitted yet</h3>
+                <p>Explore opportunities and apply with your SkillBridge profile.</p>
+                <a href="opportunities.html" class="btn-purple" style="margin-top: 14px;">Browse Opportunities</a>
+            </div>
+        `;
+        return;
+    }
+
+    apps.forEach(app => {
+        let badgeColor = "#635bff";
+        let badgeBg = "#ece9fe";
+        if (app.status === "Shortlisted") {
+            badgeColor = "#d97706";
+            badgeBg = "#fef3c7";
+        } else if (app.status === "Selected") {
+            badgeColor = "#16a34a";
+            badgeBg = "#dcfce7";
+        }
+
+        const div = document.createElement("div");
+        div.className = "op-card";
+        div.innerHTML = `
+            <div>
+                <span class="badge" style="background: ${badgeBg}; color: ${badgeColor}; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-full); font-size: 11px;">
+                    ${app.status}
+                </span>
+                <h3 style="margin-top: 6px;">${app.title}</h3>
+                <p>${app.company} • 📍 ${app.location} • Applied on ${app.applied_at}</p>
+            </div>
+            <div>
+                <button onclick="withdrawApp(${app.id})" class="secondary-btn" style="color: #ef4444; border-color: #fee2e2;">
+                    Withdraw
+                </button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function withdrawApp(id) {
+    if (!confirm("Are you sure you want to withdraw this application?")) return;
+    let apps = JSON.parse(localStorage.getItem("skillbridge_applications") || "[]");
+    apps = apps.filter(a => a.id !== id);
+    localStorage.setItem("skillbridge_applications", JSON.stringify(apps));
+    loadApplications();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadApplications();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

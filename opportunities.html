@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunities | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link active">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Explore Industry Opportunities 💼</h1>
+                <p>Browse internships, full-time roles, and research projects directly from verified partners.</p>
+            </div>
+        </div>
+
+        <!-- SEARCH & FILTER BAR -->
+        <div class="dashboard-card" style="padding: 16px 20px;">
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by role, company, or skills..."
+                    onkeyup="filterOpportunities()"
+                    style="flex: 1; min-width: 240px; padding: 10px 16px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px;">
+
+                <select id="typeFilter" onchange="filterOpportunities()" style="padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: #fff;">
+                    <option value="all">All Types</option>
+                    <option value="Internship">Internship</option>
+                    <option value="Full-Time">Full-Time</option>
+                    <option value="Research">Research Project</option>
+                </select>
+
+                <select id="modeFilter" onchange="filterOpportunities()" style="padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; background: #fff;">
+                    <option value="all">All Modes</option>
+                    <option value="Remote">Remote</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="On-Site">On-Site</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- OPPORTUNITY LIST -->
+        <div id="opportunitiesContainer" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Rendered by JS -->
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+const INITIAL_OPPORTUNITIES = [
+    {
+        id: 101,
+        title: "Full Stack Web Developer Intern",
+        company: "TechNova Solutions",
+        type: "Internship",
+        mode: "Remote",
+        location: "Mumbai, India",
+        stipend: "₹15,000 / month",
+        deadline: "2026-10-20",
+        skills: ["HTML/CSS", "JavaScript", "React", "Node.js", "MySQL"],
+        description: "Join our agile engineering team to build customer-facing web applications. You will collaborate with senior developers and ship high-impact features."
+    },
+    {
+        id: 102,
+        title: "Junior AI & Data Science Engineer",
+        company: "Cognitive Labs",
+        type: "Full-Time",
+        mode: "Hybrid",
+        location: "Pune, India",
+        stipend: "₹6,50,000 / year",
+        deadline: "2026-11-05",
+        skills: ["Python", "Pandas", "Scikit-Learn", "SQL"],
+        description: "Work on real-world machine learning predictive pipelines and natural language processing solutions."
+    },
+    {
+        id: 103,
+        title: "Frontend UI/UX Engineering Intern",
+        company: "PixelCraft Digital",
+        type: "Internship",
+        mode: "Remote",
+        location: "Bengaluru, India",
+        stipend: "₹12,000 / month",
+        deadline: "2026-10-30",
+        skills: ["Figma", "HTML5", "CSS3", "JavaScript"],
+        description: "Translate high-fidelity wireframes into accessible, responsive web interfaces with delightful micro-interactions."
+    },
+    {
+        id: 104,
+        title: "Cloud DevOps & Infrastructure Trainee",
+        company: "CloudScale Systems",
+        type: "Internship",
+        mode: "On-Site",
+        location: "Hyderabad, India",
+        stipend: "₹18,000 / month",
+        deadline: "2026-11-15",
+        skills: ["Linux", "Docker", "Git", "AWS"],
+        description: "Learn CI/CD automation, container orchestration, and server monitoring under expert cloud architects."
+    }
+];
+
+function getAppliedIds() {
+    try {
+        const apps = JSON.parse(localStorage.getItem("skillbridge_applications") || "[]");
+        return apps.map(a => a.opportunity_id);
+    } catch (e) {
+        return [];
+    }
+}
+
+function applyOpportunity(id) {
+    const op = INITIAL_OPPORTUNITIES.find(o => o.id === id);
+    if (!op) return;
+
+    let apps = [];
+    try {
+        apps = JSON.parse(localStorage.getItem("skillbridge_applications") || "[]");
+    } catch (e) {
+        apps = [];
+    }
+
+    if (apps.some(a => a.opportunity_id === id)) {
+        alert("You have already applied to this opportunity.");
+        return;
+    }
+
+    apps.push({
+        id: Date.now(),
+        opportunity_id: id,
+        title: op.title,
+        company: op.company,
+        type: op.type,
+        location: op.location,
+        applied_at: new Date().toISOString().split("T")[0],
+        status: "Applied"
+    });
+
+    localStorage.setItem("skillbridge_applications", JSON.stringify(apps));
+    alert(`Successfully applied for "${op.title}"!`);
+    filterOpportunities();
+}
+
+function filterOpportunities() {
+    const search = document.getElementById("searchInput").value.toLowerCase();
+    const typeFilter = document.getElementById("typeFilter").value;
+    const modeFilter = document.getElementById("modeFilter").value;
+    const appliedIds = getAppliedIds();
+
+    const container = document.getElementById("opportunitiesContainer");
+    container.innerHTML = "";
+
+    const filtered = INITIAL_OPPORTUNITIES.filter(op => {
+        const matchesSearch = op.title.toLowerCase().includes(search) ||
+                              op.company.toLowerCase().includes(search) ||
+                              op.skills.some(s => s.toLowerCase().includes(search));
+        const matchesType = typeFilter === "all" || op.type === typeFilter;
+        const matchesMode = modeFilter === "all" || op.mode === modeFilter;
+        return matchesSearch && matchesType && matchesMode;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <h3>No opportunities found</h3>
+                <p>Try clearing your search or filter options.</p>
+            </div>
+        `;
+        return;
+    }
+
+    filtered.forEach(op => {
+        const isApplied = appliedIds.includes(op.id);
+        const card = document.createElement("div");
+        card.className = "dashboard-card";
+        card.style.marginBottom = "0";
+
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+                <div>
+                    <span class="badge" style="background: var(--primary-light); color: var(--primary); font-weight: 700; padding: 4px 10px; border-radius: var(--radius-full); font-size: 12px;">
+                        ${op.type} • ${op.mode}
+                    </span>
+                    <h2 style="font-size: 20px; font-weight: 800; color: var(--dark); margin: 8px 0 4px 0;">
+                        ${op.title}
+                    </h2>
+                    <p style="color: var(--primary); font-weight: 600; font-size: 14px; margin-bottom: 8px;">
+                        ${op.company} • <span style="color: var(--text-muted); font-weight: normal;">📍 ${op.location}</span>
+                    </p>
+                    <p style="color: var(--text-muted); font-size: 14px; line-height: 1.5; margin-bottom: 14px; max-width: 700px;">
+                        ${op.description}
+                    </p>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+                        ${op.skills.map(s => `<span style="background:#f1f5f9;color:#334155;font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;">${s}</span>`).join('')}
+                    </div>
+                    <span style="font-size: 13px; color: var(--text-light);">
+                        💰 ${op.stipend} • ⏳ Deadline: ${op.deadline}
+                    </span>
+                </div>
+                <div>
+                    ${isApplied
+                        ? `<button class="secondary-btn" style="background:#dcfce7;color:#166534;border-color:#bbf7d0;font-weight:700;padding:10px 20px;cursor:default;" disabled>
+                            ✓ Applied
+                           </button>`
+                        : `<button class="btn-purple" onclick="applyOpportunity(${op.id})">
+                            Apply Now →
+                           </button>`
+                    }
+                </div>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    filterOpportunities();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Assessment | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link active">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Technical Skill Assessment ✓</h1>
+                <p>Test your foundational engineering knowledge and unlock job recommendations.</p>
+            </div>
+        </div>
+
+        <div class="quiz-container">
+
+            <!-- QUIZ VIEW -->
+            <div id="quizView">
+                <div class="d-flex justify-content-between align-items-center mb-2" style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span id="questionCounter" style="font-weight:700;font-size:14px;color:var(--text-muted);">Question 1 of 5</span>
+                    <span id="categoryLabel" class="quiz-category">Web Development</span>
+                </div>
+
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="progressFill" style="width: 20%;"></div>
+                </div>
+
+                <div class="quiz-question-box">
+                    <h3 id="questionText">Loading question...</h3>
+
+                    <div class="quiz-options" id="optionsContainer">
+                        <!-- Options generated via JS -->
+                    </div>
+
+                    <div style="margin-top: 24px; display: flex; justify-content: flex-end;">
+                        <button id="nextBtn" class="btn-purple" onclick="nextQuestion()" disabled>
+                            Next Question →
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RESULTS VIEW -->
+            <div id="resultsView" style="display: none;">
+                <div class="quiz-results-card">
+                    <div class="quiz-score-circle">
+                        <h1 id="scorePercent">0%</h1>
+                        <span>Your Score</span>
+                    </div>
+
+                    <h2 style="font-size: 24px; font-weight: 800; color: var(--dark); margin-bottom: 8px;">
+                        Assessment Completed!
+                    </h2>
+                    <p id="scoreSummary" style="color: var(--text-muted); margin-bottom: 24px;">
+                        You scored 0 out of 5 questions correctly.
+                    </p>
+
+                    <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                        <a href="skill-gap.html" class="btn-purple">
+                            View Skill Gap Analysis ◈
+                        </a>
+                        <a href="dashboard.html" class="secondary-btn" style="padding: 12px 20px;">
+                            Back to Dashboard
+                        </a>
+                        <button onclick="restartQuiz()" class="secondary-btn" style="padding: 12px 20px;">
+                            Retake Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+const QUESTIONS = [
+    {
+        category: "Web Development",
+        question: "Which of the following is true about 'const' in modern JavaScript?",
+        options: [
+            "It creates a variable that can be re-assigned at any time.",
+            "It creates a block-scoped variable that cannot be re-assigned.",
+            "It creates a globally hoisted variable equivalent to 'var'.",
+            "It freezes the internal properties of objects automatically."
+        ],
+        correct: 1
+    },
+    {
+        category: "Database & SQL",
+        question: "Which SQL clause is used to filter aggregated data generated by GROUP BY?",
+        options: [
+            "WHERE",
+            "ORDER BY",
+            "HAVING",
+            "JOIN"
+        ],
+        correct: 2
+    },
+    {
+        category: "API & Backend",
+        question: "Which HTTP status code signifies that a requested resource was successfully created?",
+        options: [
+            "200 OK",
+            "201 Created",
+            "204 No Content",
+            "301 Moved Permanently"
+        ],
+        correct: 1
+    },
+    {
+        category: "Data Structures",
+        question: "Which data structure operates on a First-In, First-Out (FIFO) principle?",
+        options: [
+            "Stack",
+            "Queue",
+            "Binary Search Tree",
+            "Max Heap"
+        ],
+        correct: 1
+    },
+    {
+        category: "Version Control",
+        question: "Which Git command creates a new branch named 'feature' and immediately switches to it?",
+        options: [
+            "git branch feature",
+            "git switch feature",
+            "git checkout -b feature",
+            "git merge feature"
+        ],
+        correct: 2
+    }
+];
+
+let currentIndex = 0;
+let userAnswers = [];
+
+function loadQuestion() {
+    const q = QUESTIONS[currentIndex];
+    document.getElementById("questionCounter").textContent = `Question ${currentIndex + 1} of ${QUESTIONS.length}`;
+    document.getElementById("categoryLabel").textContent = q.category;
+    document.getElementById("questionText").textContent = q.question;
+    document.getElementById("progressFill").style.width = `${((currentIndex + 1) / QUESTIONS.length) * 100}%`;
+
+    const container = document.getElementById("optionsContainer");
+    container.innerHTML = "";
+
+    const letters = ["A", "B", "C", "D"];
+    q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "quiz-option-btn";
+        if (userAnswers[currentIndex] === idx) {
+            btn.classList.add("selected");
+        }
+        btn.innerHTML = `<span class="quiz-option-letter">${letters[idx]}</span> <span>${opt}</span>`;
+        btn.onclick = () => selectOption(idx);
+        container.appendChild(btn);
+    });
+
+    const nextBtn = document.getElementById("nextBtn");
+    nextBtn.disabled = userAnswers[currentIndex] === undefined;
+    nextBtn.textContent = currentIndex === QUESTIONS.length - 1 ? "Submit Assessment ✓" : "Next Question →";
+}
+
+function selectOption(idx) {
+    userAnswers[currentIndex] = idx;
+    const buttons = document.querySelectorAll(".quiz-option-btn");
+    buttons.forEach((b, i) => {
+        b.classList.toggle("selected", i === idx);
+    });
+    document.getElementById("nextBtn").disabled = false;
+}
+
+function nextQuestion() {
+    if (currentIndex < QUESTIONS.length - 1) {
+        currentIndex++;
+        loadQuestion();
+    } else {
+        finishAssessment();
+    }
+}
+
+function finishAssessment() {
+    let score = 0;
+    QUESTIONS.forEach((q, i) => {
+        if (userAnswers[i] === q.correct) {
+            score++;
+        }
+    });
+
+    const percent = Math.round((score / QUESTIONS.length) * 100);
+
+    // Save to localStorage
+    const assessmentData = {
+        score: score,
+        total: QUESTIONS.length,
+        percent: percent,
+        completedAt: new Date().toISOString()
+    };
+    localStorage.setItem("skillbridge_assessment", JSON.stringify(assessmentData));
+
+    document.getElementById("quizView").style.display = "none";
+    document.getElementById("resultsView").style.display = "block";
+    document.getElementById("scorePercent").textContent = `${percent}%`;
+    document.getElementById("scoreSummary").textContent = `You correctly answered ${score} out of ${QUESTIONS.length} questions.`;
+}
+
+function restartQuiz() {
+    currentIndex = 0;
+    userAnswers = [];
+    document.getElementById("quizView").style.display = "block";
+    document.getElementById("resultsView").style.display = "none";
+    loadQuestion();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadQuestion();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

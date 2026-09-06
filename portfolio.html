@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Portfolio | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link active">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Digital Career Portfolio ◆</h1>
+                <p>Public showcase of your verified skills, live projects, and professional certifications.</p>
+            </div>
+            <button onclick="alert('Shareable link copied to clipboard!')" class="secondary-btn">
+                🔗 Share Portfolio
+            </button>
+        </div>
+
+        <!-- HEADLINE & ABOUT -->
+        <div class="dashboard-card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; flex-wrap: wrap;">
+                <div>
+                    <h2 id="portfolioUserName" style="font-size: 24px; font-weight: 800; color: var(--dark); margin-bottom: 6px;">Student Name</h2>
+                    <p id="portfolioHeadline" style="font-size: 16px; font-weight: 600; color: var(--primary); margin-bottom: 12px;">Full Stack Web Developer | Aspiring Software Engineer</p>
+                    <p id="portfolioAbout" style="color: var(--text-muted); line-height: 1.6; max-width: 750px;">
+                        Passionate about crafting intuitive, high-performance web applications using modern JavaScript frameworks, clean relational schemas, and cloud-native practices.
+                    </p>
+                </div>
+                <button onclick="editAbout()" class="secondary-btn">Edit Summary</button>
+            </div>
+        </div>
+
+        <!-- PROJECTS SHOWCASE -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Featured Projects</h2>
+                    <p>Hands-on applications built and deployed</p>
+                </div>
+                <button onclick="addProject()" class="btn-purple">+ Add Project</button>
+            </div>
+
+            <div id="projectsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- CERTIFICATIONS -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <div>
+                    <h2>Verified Certifications</h2>
+                    <p>Credentials earned and validated</p>
+                </div>
+                <button onclick="addCert()" class="secondary-btn">+ Add Certificate</button>
+            </div>
+
+            <div id="certsList" style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+let projects = [
+    {
+        id: 1,
+        title: "SkillBridge Web Platform",
+        desc: "Interactive talent discovery engine with role-based authentication and candidate gap matching.",
+        tech: "JavaScript, HTML5, CSS3, SQL",
+        url: "https://github.com/example/skillbridge"
+    },
+    {
+        id: 2,
+        title: "Distributed Task Scheduler",
+        desc: "Fault-tolerant background job execution worker pool with Redis queueing.",
+        tech: "Node.js, Redis, Docker",
+        url: "https://github.com/example/scheduler"
+    }
+];
+
+let certs = [
+    {
+        id: 1,
+        name: "Meta Certified Front-End Developer",
+        org: "Coursera / Meta",
+        date: "2026-05"
+    },
+    {
+        id: 2,
+        name: "AWS Certified Cloud Practitioner",
+        org: "Amazon Web Services",
+        date: "2026-03"
+    }
+];
+
+function loadPortfolio() {
+    const user = getCurrentUser();
+    if (user) {
+        document.getElementById("portfolioUserName").textContent = user.full_name || user.name || "Student Name";
+    }
+
+    const savedP = localStorage.getItem("skillbridge_projects");
+    if (savedP) {
+        try { projects = JSON.parse(savedP); } catch(e){}
+    }
+    const savedC = localStorage.getItem("skillbridge_certs");
+    if (savedC) {
+        try { certs = JSON.parse(savedC); } catch(e){}
+    }
+
+    renderProjects();
+    renderCerts();
+}
+
+function renderProjects() {
+    const container = document.getElementById("projectsList");
+    container.innerHTML = "";
+    projects.forEach((p, idx) => {
+        const div = document.createElement("div");
+        div.style = "padding: 18px; border: 1px solid var(--border); border-radius: 12px; background: #fff;";
+        div.innerHTML = `
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--dark);">${p.title}</h3>
+                <span onclick="removeProject(${idx})" style="cursor:pointer;color:#ef4444;font-size:14px;">✕</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin: 8px 0 12px 0; line-height: 1.4;">${p.desc}</p>
+            <span style="font-size: 12px; font-weight: 600; color: var(--primary); background: var(--primary-light); padding: 4px 8px; border-radius: 4px;">${p.tech}</span>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function renderCerts() {
+    const container = document.getElementById("certsList");
+    container.innerHTML = "";
+    certs.forEach((c, idx) => {
+        const div = document.createElement("div");
+        div.className = "op-card";
+        div.innerHTML = `
+            <div>
+                <span class="badge" style="background:#dcfce7;color:#166534;font-weight:700;padding:2px 8px;border-radius:4px;font-size:11px;">Verified ✓</span>
+                <h3 style="margin-top: 4px;">${c.name}</h3>
+                <p>${c.org} • Issued ${c.date}</p>
+            </div>
+            <button onclick="removeCert(${idx})" class="secondary-btn" style="color:#ef4444;border-color:#fee2e2;">Remove</button>
+        `;
+        container.appendChild(div);
+    });
+}
+
+function addProject() {
+    const title = prompt("Enter project title:");
+    if (!title) return;
+    const desc = prompt("Enter brief project description:") || "Demonstration project.";
+    const tech = prompt("Enter technologies used (e.g. React, Python):") || "Web Tech";
+    projects.push({ id: Date.now(), title, desc, tech });
+    localStorage.setItem("skillbridge_projects", JSON.stringify(projects));
+    renderProjects();
+}
+
+function removeProject(idx) {
+    projects.splice(idx, 1);
+    localStorage.setItem("skillbridge_projects", JSON.stringify(projects));
+    renderProjects();
+}
+
+function addCert() {
+    const name = prompt("Enter certification title:");
+    if (!name) return;
+    const org = prompt("Enter issuing organization:") || "Verified Partner";
+    const date = new Date().toISOString().split("T")[0];
+    certs.push({ id: Date.now(), name, org, date });
+    localStorage.setItem("skillbridge_certs", JSON.stringify(certs));
+    renderCerts();
+}
+
+function removeCert(idx) {
+    certs.splice(idx, 1);
+    localStorage.setItem("skillbridge_certs", JSON.stringify(certs));
+    renderCerts();
+}
+
+function editAbout() {
+    const newHeadline = prompt("Update your professional headline:", document.getElementById("portfolioHeadline").textContent);
+    if (newHeadline) document.getElementById("portfolioHeadline").textContent = newHeadline;
+    const newAbout = prompt("Update your bio summary:", document.getElementById("portfolioAbout").textContent);
+    if (newAbout) document.getElementById("portfolioAbout").textContent = newAbout;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadPortfolio();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

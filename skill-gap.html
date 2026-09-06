@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Gap Analysis | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link active">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Skill Gap Analysis ◈</h1>
+                <p>Compare your current competencies against live industry benchmarks to target what to learn next.</p>
+            </div>
+            <a href="skill-assessment.html" class="btn-purple">
+                Retake Assessment ✓
+            </a>
+        </div>
+
+        <!-- TARGET ROLE SELECTOR -->
+        <div class="dashboard-card" style="padding: 16px 20px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;">
+                <div>
+                    <label style="font-size: 13px; font-weight: 700; color: var(--text-muted); display: block;">Select Target Career Role:</label>
+                    <select id="roleSelector" onchange="renderGapAnalysis()" style="font-size: 16px; font-weight: 700; color: var(--dark); padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; margin-top: 4px; background: #fff;">
+                        <option value="fullstack">Full Stack Web Developer</option>
+                        <option value="data">Data Analyst & Python Engineer</option>
+                        <option value="devops">DevOps & Cloud Engineer</option>
+                    </select>
+                </div>
+
+                <div style="text-align: right;">
+                    <span style="font-size: 12px; color: var(--text-light); font-weight: 600;">Match Readiness</span>
+                    <h2 id="overallReadiness" style="font-size: 28px; font-weight: 800; color: var(--primary); margin: 0;">75%</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILL GAP BREAKDOWN -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h2>Competency Matrix</h2>
+                <p>Status breakdown against required job profile skills</p>
+            </div>
+
+            <div id="gapMatrixContainer" style="display: flex; flex-direction: column; gap: 16px;">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- CALL TO ACTION -->
+        <div class="dashboard-card" style="background: linear-gradient(135deg, #faf9ff, #f3f0ff); border-color: #e9d5ff;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+                <div>
+                    <h3 style="font-size: 18px; font-weight: 800; color: var(--dark); margin-bottom: 4px;">Ready to Bridge Your Skill Gaps?</h3>
+                    <p style="color: var(--text-muted); margin: 0;">Our AI has created a personalized learning path with curated free courses and projects.</p>
+                </div>
+                <a href="ai-recommendations.html" class="btn-purple">
+                    View AI Action Plan →
+                </a>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+const BENCHMARKS = {
+    fullstack: {
+        role: "Full Stack Web Developer",
+        readiness: "78%",
+        skills: [
+            { name: "JavaScript / ES6+", status: "Acquired", level: "90%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "HTML5 & Modern CSS3", status: "Acquired", level: "85%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "Relational SQL (MySQL/Postgres)", status: "Acquired", level: "80%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "React.js & Component Architecture", status: "In Progress", level: "65%", badge: "Needs Improvement ⏳", color: "#d97706", bg: "#fef3c7" },
+            { name: "Docker & Container Deployment", status: "Missing", level: "25%", badge: "High Priority Gap ⚠️", color: "#dc2626", bg: "#fee2e2" }
+        ]
+    },
+    data: {
+        role: "Data Analyst & Python Engineer",
+        readiness: "70%",
+        skills: [
+            { name: "Python Scripting & OOP", status: "Acquired", level: "85%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "SQL Queries & Aggregations", status: "Acquired", level: "85%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "Pandas & Data Cleaning", status: "In Progress", level: "60%", badge: "Needs Improvement ⏳", color: "#d97706", bg: "#fef3c7" },
+            { name: "Tableau / PowerBI Dashboards", status: "Missing", level: "30%", badge: "High Priority Gap ⚠️", color: "#dc2626", bg: "#fee2e2" }
+        ]
+    },
+    devops: {
+        role: "DevOps & Cloud Engineer",
+        readiness: "52%",
+        skills: [
+            { name: "Linux Administration & Shell", status: "Acquired", level: "75%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "Git & Version Control", status: "Acquired", level: "85%", badge: "Acquired ✓", color: "#16a34a", bg: "#dcfce7" },
+            { name: "Docker & Microservices", status: "Missing", level: "30%", badge: "High Priority Gap ⚠️", color: "#dc2626", bg: "#fee2e2" },
+            { name: "AWS Cloud Fundamentals", status: "Missing", level: "20%", badge: "High Priority Gap ⚠️", color: "#dc2626", bg: "#fee2e2" }
+        ]
+    }
+};
+
+function renderGapAnalysis() {
+    const selected = document.getElementById("roleSelector").value;
+    const data = BENCHMARKS[selected];
+
+    document.getElementById("overallReadiness").textContent = data.readiness;
+    const container = document.getElementById("gapMatrixContainer");
+    container.innerHTML = "";
+
+    data.skills.forEach(item => {
+        const row = document.createElement("div");
+        row.style = "padding: 14px 18px; border: 1px solid var(--border); border-radius: 10px; background: #fff;";
+
+        row.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <strong style="font-size: 15px; color: var(--dark);">${item.name}</strong>
+                <span style="font-size: 12px; font-weight: 700; color: ${item.color}; background: ${item.bg}; padding: 4px 10px; border-radius: 20px;">
+                    ${item.badge}
+                </span>
+            </div>
+            <div style="width: 100%; height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden;">
+                <div style="height: 100%; width: ${item.level}; background: ${item.color}; border-radius: 10px; transition: width 0.4s ease;"></div>
+            </div>
+        `;
+        container.appendChild(row);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderGapAnalysis();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

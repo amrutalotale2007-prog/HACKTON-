@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Profile | SkillBridge</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="auth.js"></script>
+    <script>
+        const currentUser = requireAuth();
+    </script>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+        <div class="side-logo">
+            Skill<span>Bridge</span>
+        </div>
+
+        <div class="side-title">
+            Student Portal
+        </div>
+
+        <a href="dashboard.html" class="side-link">
+            <span>▣</span>
+            Dashboard
+        </a>
+
+        <a href="skill-assessment.html" class="side-link">
+            <span>✓</span>
+            Skill Assessment
+        </a>
+
+        <a href="skill-profile.html" class="side-link active">
+            <span>◎</span>
+            Skill Profile
+        </a>
+
+        <a href="skill-gap.html" class="side-link">
+            <span>◈</span>
+            Skill Gap Analysis
+        </a>
+
+        <a href="ai-recommendations.html" class="side-link">
+            <span>✦</span>
+            AI Recommendations
+        </a>
+
+        <a href="opportunities.html" class="side-link">
+            <span>▤</span>
+            Opportunities
+        </a>
+
+        <a href="applications.html" class="side-link">
+            <span>▥</span>
+            My Applications
+        </a>
+
+        <a href="portfolio.html" class="side-link">
+            <span>◆</span>
+            Digital Portfolio
+        </a>
+
+        <div class="side-title">
+            Account
+        </div>
+
+        <a href="javascript:void(0)" onclick="logout()" class="side-link">
+            <span>↩</span>
+            Logout
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main">
+
+        <div class="topbar">
+            <div>
+                <h1>Student Skill Profile ◎</h1>
+                <p>Manage your verified academic background, career objectives, and technical capabilities.</p>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 24px; align-items: flex-start;">
+
+            <!-- PROFILE DETAILS -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2>Academic Background</h2>
+                </div>
+
+                <form onsubmit="saveProfile(event)">
+                    <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Full Name</label>
+                    <input type="text" id="profName" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 14px;" required>
+
+                    <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">College / University</label>
+                    <input type="text" id="profCollege" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 14px;" placeholder="e.g. Mumbai University">
+
+                    <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Course / Major</label>
+                    <input type="text" id="profCourse" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 14px;" placeholder="e.g. B.Sc. Computer Science">
+
+                    <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Graduation Year</label>
+                    <input type="text" id="profYear" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 14px;" placeholder="e.g. 2026">
+
+                    <label style="font-size: 13px; font-weight: 600; display: block; margin-bottom: 4px;">Bio / Career Summary</label>
+                    <textarea id="profBio" rows="3" class="form-control" style="width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px;" placeholder="Aspiring software engineer eager to solve industry problems..."></textarea>
+
+                    <button type="submit" class="btn-purple" style="width: 100%;">Save Changes</button>
+                </form>
+            </div>
+
+            <!-- SKILLS LIST -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h2>Technical & Domain Skills</h2>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <input type="text" id="newSkillInput" placeholder="Add a skill (e.g. Python, Docker, SQL)..." style="flex: 1; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;">
+                    <button type="button" class="btn-purple" onclick="addSkill()">+ Add</button>
+                </div>
+
+                <div id="skillsList" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+let skills = ["JavaScript", "HTML/CSS", "Python", "SQL", "Git", "React"];
+
+function loadProfile() {
+    const user = getCurrentUser();
+    if (user) {
+        document.getElementById("profName").value = user.full_name || user.name || "";
+    }
+
+    const saved = localStorage.getItem("skillbridge_profile");
+    if (saved) {
+        try {
+            const data = JSON.parse(saved);
+            document.getElementById("profCollege").value = data.college || "";
+            document.getElementById("profCourse").value = data.course || "";
+            document.getElementById("profYear").value = data.year || "";
+            document.getElementById("profBio").value = data.bio || "";
+            if (data.skills && Array.isArray(data.skills)) {
+                skills = data.skills;
+            }
+        } catch (e) {}
+    }
+
+    renderSkills();
+}
+
+function renderSkills() {
+    const container = document.getElementById("skillsList");
+    container.innerHTML = "";
+    skills.forEach((skill, index) => {
+        const badge = document.createElement("div");
+        badge.style = "background: var(--primary-light); color: var(--primary); font-weight: 600; padding: 8px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px;";
+        badge.innerHTML = `<span>${skill}</span> <span style="cursor:pointer;color:#ef4444;" onclick="removeSkill(${index})">✕</span>`;
+        container.appendChild(badge);
+    });
+}
+
+function addSkill() {
+    const input = document.getElementById("newSkillInput");
+    const val = input.value.trim();
+    if (!val) return;
+    if (!skills.includes(val)) {
+        skills.push(val);
+        renderSkills();
+        persistProfile();
+    }
+    input.value = "";
+}
+
+function removeSkill(idx) {
+    skills.splice(idx, 1);
+    renderSkills();
+    persistProfile();
+}
+
+function persistProfile() {
+    const data = {
+        college: document.getElementById("profCollege").value,
+        course: document.getElementById("profCourse").value,
+        year: document.getElementById("profYear").value,
+        bio: document.getElementById("profBio").value,
+        skills: skills
+    };
+    localStorage.setItem("skillbridge_profile", JSON.stringify(data));
+}
+
+function saveProfile(e) {
+    e.preventDefault();
+    const user = getCurrentUser();
+    if (user) {
+        user.full_name = document.getElementById("profName").value;
+        setCurrentUser(user);
+    }
+    persistProfile();
+    alert("Profile saved successfully!");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadProfile();
+});
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
